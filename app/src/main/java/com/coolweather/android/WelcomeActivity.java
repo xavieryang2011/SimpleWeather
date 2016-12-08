@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import org.litepal.util.LogUtil;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -59,19 +60,6 @@ public class WelcomeActivity extends Activity {
         showProgressDialog("自动定位中...");
         initBaiduMapLocation();
 
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                requestWeather();
-            }
-        }).start();
 
     }
 
@@ -84,6 +72,7 @@ public class WelcomeActivity extends Activity {
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
         mLocationClient.start();
+        LogUtil.d("initBaiduMapLocation","initBaiduMapLocation");
     }
 
     private void showProgressDialog(String title) {
@@ -97,7 +86,7 @@ public class WelcomeActivity extends Activity {
 
     public void requestWeather() {
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" + locationCity + "&key=bc0418b57b2d4918819d3974ac1285d9";
-        LogUtil.d("weatherUrl",weatherUrl);
+        LogUtil.d("weatherUrl", weatherUrl);
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -112,9 +101,9 @@ public class WelcomeActivity extends Activity {
                             editor.apply();
 
                             Intent intent = new Intent(WelcomeActivity.this,
-                                    MainActivity.class);
+                                    WeatherActivity.class);
 
-                            intent.putExtra("weather_data", (Parcelable) weather);
+                            intent.putExtra("weather_data", (Serializable) weather);
                             intent.putExtra("normal_city", normalDistrict);
                             startActivity(intent);
                             finish();
@@ -154,18 +143,24 @@ public class WelcomeActivity extends Activity {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
+            Toast.makeText(WelcomeActivity.this,"location.getCity()",Toast.LENGTH_SHORT).show();
             if (location != null) {
                 normalDistrict = location.getDistrict();
                 locationCity = location.getCity();
-                LogUtil.d("Location",locationCity);
+                LogUtil.d("Location", locationCity);
                 if (locationCity == null) {
                     Toast.makeText(WelcomeActivity.this, "定位失败，请检查网络", Toast.LENGTH_SHORT).show();
                 } else {
+                    pDialog.dismiss();
                     String[] str = locationCity.split("市");
                     locationCity = str[0];
                     if ("".equals(locationCity)) {
-                        Toast.makeText(WelcomeActivity.this, "定位失败，默认为武汉", Toast.LENGTH_LONG).show();
+                        Toast.makeText(WelcomeActivity.this, "定位失败，默认为北京", Toast.LENGTH_LONG).show();
                     }
+                    Intent intent = new Intent(WelcomeActivity.this, WeatherActivity.class);
+                    intent.putExtra("weather_id", locationCity);
+                    startActivity(intent);
+                    WelcomeActivity.this.finish();
                 }
             }
         }
