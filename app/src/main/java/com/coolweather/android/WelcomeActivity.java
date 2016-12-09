@@ -57,6 +57,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private void initData() {
+        LogUtil.d("initData","初始化");
         showProgressDialog("自动定位中...");
         initBaiduMapLocation();
 
@@ -143,11 +144,10 @@ public class WelcomeActivity extends Activity {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            Toast.makeText(WelcomeActivity.this,"location.getCity()",Toast.LENGTH_SHORT).show();
+
             if (location != null) {
                 normalDistrict = location.getDistrict();
                 locationCity = location.getCity();
-                LogUtil.d("Location", locationCity);
                 if (locationCity == null) {
                     Toast.makeText(WelcomeActivity.this, "定位失败，请检查网络", Toast.LENGTH_SHORT).show();
                 } else {

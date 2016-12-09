@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coolweather.android">
+          package="com.coolweather.android">
     <!-- 访问网络 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
@@ -32,27 +32,27 @@
         android:theme="@style/AppTheme">
         <activity android:name=".WelcomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".WeatherActivity" />
+        <activity android:name=".WeatherActivity"/>
 
         <service
             android:name=".service.AutoUpdateService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"/>
 
         <!-- 声明service组件,每个app拥有自己单独的定位service -->
-        <service android:name="com.baidu.location.f"
-                 android:enabled="true"
-                 android:process=":remote">
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
         </service>
-        <meta-data android:name="com.baidu.lbsapi.API_KEY"
-                   android:value="iGs8rFvzh1e8c7C9DjXT5toK"
-
-            />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="MR6Lc86lVj6VpwICj8AtbI16Y7mRMvyF"/>
     </application>
 
 </manifest>
