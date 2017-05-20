@@ -8,13 +8,25 @@ android {
         applicationId "com.simpleweather.android"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1000
+        versionCode 1
         versionName "1.0.0"
+    }
+    signingConfigs{
+      myConfig{
+          storeFile file("keystore/sw_keystore.jks")
+          storePassword "simpleweather2017"
+          keyAlias "simpleweather"
+          keyPassword "simpleweather2017"
+      }
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.myConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+//            signingConfig signingConfigs.myConfig
         }
     }
     sourceSets {
