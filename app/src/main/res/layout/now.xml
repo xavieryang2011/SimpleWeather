@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,7 +10,7 @@
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="start"
         android:textColor="#fff"
         android:textSize="60sp" />
 
@@ -18,8 +18,10 @@
         android:id="@+id/weather_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_alignTop="@id/degree_text"
+        android:layout_toRightOf="@id/degree_text"
+        android:layout_marginLeft="10dp"
         android:textColor="#fff"
         android:textSize="20sp" />
 
-</LinearLayout>
+</RelativeLayout>

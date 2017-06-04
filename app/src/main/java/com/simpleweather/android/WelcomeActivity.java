@@ -52,7 +52,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private void initData() {
-        LogUtil.d("initData","初始化");
+        LogUtil.d("initData", "初始化");
         showProgressDialog("自动定位中...");
         initBaiduMapLocation();
 
@@ -68,7 +68,7 @@ public class WelcomeActivity extends Activity {
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
         mLocationClient.start();
-        LogUtil.d("initBaiduMapLocation","initBaiduMapLocation");
+        LogUtil.d("initBaiduMapLocation", "initBaiduMapLocation");
     }
 
     private void showProgressDialog(String title) {
@@ -142,21 +142,21 @@ public class WelcomeActivity extends Activity {
 
             if (location != null) {
                 normalDistrict = location.getDistrict();
-                locationCity = location.getCity();
-                if (locationCity == null) {
-                    Toast.makeText(WelcomeActivity.this, "定位失败，请检查网络", Toast.LENGTH_SHORT).show();
+                if (location.getCity() == null) {
+                    Toast.makeText(WelcomeActivity.this, "网络定位失败，默认为北京", Toast.LENGTH_SHORT).show();
                 } else {
-                    pDialog.dismiss();
+                    locationCity = location.getCity();
                     String[] str = locationCity.split("市");
                     locationCity = str[0];
                     if ("".equals(locationCity)) {
                         Toast.makeText(WelcomeActivity.this, "定位失败，默认为北京", Toast.LENGTH_LONG).show();
                     }
-                    Intent intent = new Intent(WelcomeActivity.this, WeatherActivity.class);
-                    intent.putExtra("weather_id", locationCity);
-                    startActivity(intent);
-                    WelcomeActivity.this.finish();
                 }
+                pDialog.dismiss();
+                Intent intent = new Intent(WelcomeActivity.this, WeatherActivity.class);
+                intent.putExtra("weather_id", locationCity);
+                startActivity(intent);
+                WelcomeActivity.this.finish();
             }
         }
 
