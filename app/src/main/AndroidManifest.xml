@@ -43,7 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.simpleweather.android.WeatherActivity"/>
+        <activity android:name="com.simpleweather.android.WeatherActivity"
+            android:launchMode="singleTask"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
