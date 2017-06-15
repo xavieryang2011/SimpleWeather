@@ -24,6 +24,7 @@ import com.simpleweather.android.gson.Forecast;
 import com.simpleweather.android.gson.Weather;
 import com.simpleweather.android.service.AutoUpdateService;
 import com.simpleweather.android.util.HttpUtil;
+import com.simpleweather.android.util.ShareUtil;
 import com.simpleweather.android.util.Utility;
 
 import java.io.IOException;
@@ -65,6 +66,7 @@ public class WeatherActivity extends AppCompatActivity {
     private ImageView bingPicImg;
 
     private LinearLayout mLlCity;
+    private LinearLayout mllShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class WeatherActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navButton = (Button) findViewById(R.id.nav_button);
         mLlCity=(LinearLayout)findViewById(R.id.ll_city);
+        mllShare=(LinearLayout)findViewById(R.id.ll_share);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
         final String weatherId;
@@ -112,6 +115,13 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 requestWeather(weatherId);
+            }
+        });
+        mllShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareUtil shareUtil=new ShareUtil();
+                shareUtil.showShare(getApplicationContext());
             }
         });
         mLlCity.setOnClickListener(new View.OnClickListener() {
